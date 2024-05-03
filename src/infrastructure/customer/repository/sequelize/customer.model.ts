@@ -10,7 +10,7 @@ export default class CustomerModel extends Model {
     @Column(DataType.STRING)
     declare id: UUID
 
-    @Column({ allowNull: false })
+    @Column(DataType.STRING)
     declare name: string
 
     @Column(DataType.BOOLEAN)
@@ -19,15 +19,15 @@ export default class CustomerModel extends Model {
     @Column(DataType.NUMBER)
     declare rewardPoints: number
 
-    @Column
+    @Column(DataType.STRING)
     declare street: string
 
-    @Column
+    @Column(DataType.NUMBER)
     declare number: number
 
-    @Column
+    @Column(DataType.STRING)
     declare zipcode: string
 
-    @Column
+    @Column(DataType.STRING)
     declare city: string
 }
