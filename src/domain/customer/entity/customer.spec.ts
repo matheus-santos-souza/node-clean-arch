@@ -19,19 +19,24 @@ describe("Customer unit tests", () => {
 
     it("Deve validar nome Vazio ao Criar Customer", () => {
         expect(() => new Customer({ name: "" }))
-            .toThrow(Error("Name is required!")); 
+            .toThrow(Error("customer: Name is required!")); 
+    })
+
+    it("Deve validar nome Vazio e activate ao Criar Customer", () => {
+        expect(() => new Customer({ name: "", active: true }))
+            .toThrow(Error("customer: Name is required!, customer: Address is mandatory to activate a customer!")); 
     })
 
     it("Deve validar active sem Address ao criar Customer", () => {
         expect(() => new Customer({ name: "Matheus", active: true }))
-            .toThrow(Error("Address is mandatory to activate a customer!")); 
+            .toThrow(Error("customer: Address is mandatory to activate a customer!")); 
     })
 
     it("Deve validar ativação do Customer sem Address", () => {
         const customer = new Customer({ name: "Matheus" })
 
         expect(() => customer.activate())
-            .toThrow(Error("Address is mandatory to activate a customer!")); 
+            .toThrow(Error("customer: Address is mandatory to activate a customer!")); 
     })
 
     it("Deve validar ativação do Customer com Address", () => {
@@ -47,7 +52,7 @@ describe("Customer unit tests", () => {
         expect(customer.active).toBe(false)
         expect(() => customer.activate())
             .not
-            .toThrow(Error("Address is mandatory to activate a customer!")); 
+            .toThrow(Error("customer: Address is mandatory to activate a customer!")); 
         expect(customer.active).toBe(true)
     })
 
@@ -91,7 +96,7 @@ describe("Customer unit tests", () => {
         const customer = new Customer({ name: "Matheus" })
         
         expect(() => customer.changeName(""))
-            .toThrow(Error("Name is required!"));  
+            .toThrow(Error("customer: Name is required!"));  
     })
 
     it("Deve validar a troca de nome do Customer", () => {

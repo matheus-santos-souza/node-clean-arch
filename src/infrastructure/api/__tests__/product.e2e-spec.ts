@@ -51,8 +51,6 @@ describe("E2E test for Customer", () => {
             })
         expect(response2.status).toBe(200)
 
-
-
         const responseList = await request(app)
             .get('/product')
             .send({})

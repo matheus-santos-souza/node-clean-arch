@@ -1,15 +1,17 @@
 import { UUID, randomUUID } from "node:crypto";
 import Address from '../value-object/address';
 import { CustomerInterface } from "./customer.interface";
+import Entity from "../../@shared/entity/entity.abstract";
+import NotificationError from "../../@shared/notification/notification.error";
 
-export default class Customer implements CustomerInterface {
-    private readonly _id: UUID;
+export default class Customer extends Entity implements CustomerInterface {
     private _name: string;
     private _address?: Address;
     private _active?: boolean = false;
     private _rewardPoints?: number = 0;
 
     constructor(props: Omit<CustomerInterface, 'id'>, id?: UUID) {
+        super();
         this._name = props.name
         this._address = props.address
         this._active = props.active || false
@@ -27,6 +29,9 @@ export default class Customer implements CustomerInterface {
     public validate() {
         this.validName(this._name)
         this.validActivate(this._address, this._active)
+        if (this.notification.hasErrors()) {
+            throw new NotificationError(this.notification.getErrors())
+        }
     }
 
     get id(): UUID {
@@ -50,13 +55,13 @@ export default class Customer implements CustomerInterface {
     }
 
     public changeName(name: string): void {
-        this.validName(name)
         this._name = name
+        this.validate()
     }
 
     public activate(): void {
-        this.validActivate(this._address, true)
         this._active = true
+        this.validate()
     }
 
     public deactivate(): void {
@@ -73,13 +78,19 @@ export default class Customer implements CustomerInterface {
 
     private validName(name: string) {
         if (!name) {
-            throw new Error("Name is required!")
+            this.notification.addError({
+                context: "customer",
+                message: "Name is required!"
+            })
         } 
     }
 
     private validActivate(address: Address, active: boolean) {
         if (!address && active === true) {
-            throw new Error("Address is mandatory to activate a customer!")
+            this.notification.addError({
+                context: "customer",
+                message: "Address is mandatory to activate a customer!"
+            })
         }
     }
 }

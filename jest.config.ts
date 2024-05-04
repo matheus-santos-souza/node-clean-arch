@@ -21,7 +21,7 @@ const config: Config = {
   ],
   coverageDirectory: "../coverage",
   testEnvironment: "node",
-  collectCoverage: true,
+  collectCoverage: false,
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

@@ -18,12 +18,17 @@ describe("Product unit tests", () => {
 
     it("Deve validar nome vazio", () => {
         expect(() => new Product({ name: "", price: 100 }))
-            .toThrow(new Error('Name is required!'))
+            .toThrow(new Error('product: Name is required!'))
     })
 
     it("Deve validar preço menor que 0", () => {
         expect(() => new Product({ name: "Product 1", price: -1 }))
-            .toThrow(new Error('price cannot be less than 0!'))
+            .toThrow(new Error('product: price cannot be less than 0!'))
+    })
+
+    it("Deve validar preço menor que 0 e nome vazio", () => {
+        expect(() => new Product({ name: "", price: -1 }))
+            .toThrow(new Error('product: Name is required!, product: price cannot be less than 0!'))
     })
 
     it("Deve validar trocar nome do produto", () => {
@@ -32,7 +37,7 @@ describe("Product unit tests", () => {
         expect(product.name).toBe("Product 2")
 
         expect(() => product.name = '')
-            .toThrow(new Error('Name is required!'))
+            .toThrow(new Error('product: Name is required!'))
     })
 
     it("Deve validar trocar preço do produto", () => {
@@ -41,7 +46,7 @@ describe("Product unit tests", () => {
         expect(product.price).toBe(250)
 
         expect(() => product.price = -1)
-            .toThrow(new Error('price cannot be less than 0!'))
+            .toThrow(new Error('product: price cannot be less than 0!'))
     })
 
 })
