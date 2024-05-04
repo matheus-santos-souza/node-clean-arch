@@ -1,5 +1,5 @@
 import { UUID } from "crypto";
-import { Model, Column, PrimaryKey, Table } from "sequelize-typescript";
+import { Model, Column, PrimaryKey, Table, DataType } from "sequelize-typescript";
 
 @Table({
     tableName: "products",
@@ -7,12 +7,12 @@ import { Model, Column, PrimaryKey, Table } from "sequelize-typescript";
 })
 export default class ProductModel extends Model {
     @PrimaryKey
-    @Column('string')
+    @Column(DataType.STRING)
     declare id: UUID
 
-    @Column({ allowNull: false })
+    @Column(DataType.STRING)
     declare name: string
-
-    @Column({ allowNull: false })
+    
+    @Column(DataType.NUMBER)
     declare price: number
 }
