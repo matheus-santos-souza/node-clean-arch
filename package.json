@@ -37,6 +37,7 @@
     "reflect-metadata": "^0.2.1",
     "sequelize": "^6.37.1",
     "sequelize-typescript": "^2.1.6",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "yup": "^1.4.0"
   }
 }

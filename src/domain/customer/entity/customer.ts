@@ -3,6 +3,7 @@ import Address from '../value-object/address';
 import { CustomerInterface } from "./customer.interface";
 import Entity from "../../@shared/entity/entity.abstract";
 import NotificationError from "../../@shared/notification/notification.error";
+import CustomerValidatorFactory from "../factory/customer.validator.factory";
 
 export default class Customer extends Entity implements CustomerInterface {
     private _name: string;
@@ -27,8 +28,7 @@ export default class Customer extends Entity implements CustomerInterface {
     }
 
     public validate() {
-        this.validName(this._name)
-        this.validActivate(this._address, this._active)
+        CustomerValidatorFactory.create().validate(this)
         if (this.notification.hasErrors()) {
             throw new NotificationError(this.notification.getErrors())
         }
@@ -74,23 +74,5 @@ export default class Customer extends Entity implements CustomerInterface {
 
     public addRewardPoints(points: number): void {
         this._rewardPoints += points
-    }
-
-    private validName(name: string) {
-        if (!name) {
-            this.notification.addError({
-                context: "customer",
-                message: "Name is required!"
-            })
-        } 
-    }
-
-    private validActivate(address: Address, active: boolean) {
-        if (!address && active === true) {
-            this.notification.addError({
-                context: "customer",
-                message: "Address is mandatory to activate a customer!"
-            })
-        }
     }
 }

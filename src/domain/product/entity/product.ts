@@ -2,6 +2,7 @@ import { UUID, randomUUID } from "node:crypto";
 import { ProductInterface } from "./product.interface";
 import Entity from "../../@shared/entity/entity.abstract";
 import NotificationError from "../../@shared/notification/notification.error";
+import ProductValidatorFactory from "../factory/product.validator.factory";
 
 export default class Product extends Entity implements ProductInterface {
     private _name: string;
@@ -22,8 +23,7 @@ export default class Product extends Entity implements ProductInterface {
     }
 
     public validate(): void {
-        this.validateName(this._name)
-        this.validatePrice(this._price)
+        ProductValidatorFactory.create().validate(this)
         if (this.notification.hasErrors()) {
             throw new NotificationError(this.notification.getErrors())
         }
@@ -49,23 +49,5 @@ export default class Product extends Entity implements ProductInterface {
     set price(newPrice: number) {
         this._price = newPrice
         this.validate()
-    }
-
-    private validateName(name: string) {
-        if (!name) {
-            this.notification.addError({
-                context: "product",
-                message: "Name is required!"
-            })
-        }
-    }
-
-    private validatePrice(price: number) {
-        if (price < 0) {
-            this.notification.addError({
-                context: "product",
-                message: "price cannot be less than 0!"
-            })
-        }
     }
 }
