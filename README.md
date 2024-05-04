@@ -25,3 +25,7 @@ Executa os testes unitários em modo de observação, ou seja, os testes serão 
 ### `npm run test:cov`
 
 Executa os testes unitários e gera um relatório de cobertura de código usando o framework Jest.
+
+### `npm run test:api:e2e`
+
+Executa os testes end-to-end da api.
